@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "Seek-Pro",
+    "slug": "seek-pro",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "seekpro",
+    "userInterfaceStyle": "automatic",
+    "plugins": [
+      "expo-router",
+      "expo-image",
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow SeekPro to use Face ID to sign you in."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}

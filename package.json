@@ -1,0 +1,26 @@
+{
+  "name": "seek-pro",
+  "private": true,
+  "packageManager": "npm@11.13.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "apps/mobile",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace @seek-pro/web",
+    "build:web": "npm run build --workspace @seek-pro/web",
+    "lint:web": "npm run lint --workspace @seek-pro/web",
+    "typecheck:web": "npm run typecheck --workspace @seek-pro/web",
+    "dev:mobile": "npm run start --workspace @seek-pro/mobile",
+    "web:mobile": "npm run web --workspace @seek-pro/mobile",
+    "android:mobile": "npm run android --workspace @seek-pro/mobile",
+    "ios:mobile": "npm run ios --workspace @seek-pro/mobile",
+    "lint:mobile": "npm run lint --workspace @seek-pro/mobile",
+    "check:mobile-config": "npm run check:config --workspace @seek-pro/mobile",
+    "export:mobile:check": "npm run export:check --workspace @seek-pro/mobile",
+    "typecheck:mobile": "npm run typecheck --workspace @seek-pro/mobile"
+  }
+}

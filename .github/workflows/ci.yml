@@ -1,0 +1,98 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  server:
+    name: Server checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@v10
+        with:
+          version: 0.13.5
+          python-version: "3.12"
+          enable-cache: true
+          cache-dependency-glob: |
+            apps/server/pyproject.toml
+            apps/server/uv.lock
+
+      - name: Install locked server dependencies
+        run: uv sync --project apps/server --extra dev --locked
+
+      - name: Lint server
+        run: uv run --project apps/server --locked --extra dev ruff check apps/server
+
+      - name: Check server formatting
+        run: uv run --project apps/server --locked --extra dev ruff format --check apps/server
+
+      - name: Test server
+        run: uv run --project apps/server --locked --extra dev pytest apps/server/tests
+
+  web:
+    name: Web checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install locked workspace dependencies
+        run: npm ci
+
+      - name: Lint web
+        run: npm run lint:web
+
+      - name: Type-check web
+        run: npm run typecheck:web
+
+      - name: Build web
+        run: npm run build:web
+
+  mobile:
+    name: Mobile checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install locked workspace dependencies
+        run: npm ci
+
+      - name: Lint mobile
+        run: npm run lint:mobile
+
+      - name: Type-check mobile
+        run: npm run typecheck:mobile
+
+      - name: Validate Expo config
+        run: npm run check:mobile-config
+
+      - name: Export Android, iOS, and web bundles
+        run: npm run export:mobile:check
