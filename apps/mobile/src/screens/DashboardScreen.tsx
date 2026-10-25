@@ -7,6 +7,7 @@ import { Manrope_500Medium, Manrope_600SemiBold } from '@expo-google-fonts/manro
 import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import { Image } from 'expo-image';
+import { useRouter, type Href } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import {
@@ -19,7 +20,8 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MainBottomNavigation from '../components/MainBottomNavigation';
-import { styles } from '../styles/dashboard.style';
+import { createStyles } from '../styles/dashboard.style';
+import { useThemedStyles } from '../lib/theme-context';
 import CardWidget from '../widgets/common/card.widget';
 import MetricCardWidget from '../widgets/dashboard/MetricCard.widget';
 
@@ -30,15 +32,18 @@ function SectionHeading({
   title: string;
   meta?: string;
 }) {
+  const appTheme = useThemedStyles(createStyles);
   return (
-    <View style={styles.sectionHeading}>
-      <Text style={styles.sectionTitle}>{title}</Text>
-      {meta ? <Text style={styles.sectionMeta}>{meta}</Text> : null}
+    <View style={appTheme.styles.sectionHeading}>
+      <Text style={appTheme.styles.sectionTitle}>{title}</Text>
+      {meta ? <Text style={appTheme.styles.sectionMeta}>{meta}</Text> : null}
     </View>
   );
 }
 
 export default function DashboardScreen() {
+  const appTheme = useThemedStyles(createStyles);
+  const router = useRouter();
   const [prompt, setPrompt] = useState('');
   const [fontsLoaded, fontError] = useFonts({
     ManropeMedium: Manrope_500Medium,
@@ -59,187 +64,186 @@ export default function DashboardScreen() {
   };
 
   if (!fontsLoaded && !fontError) {
-    return <View style={styles.safeArea} />;
+    return <View style={appTheme.styles.safeArea} />;
   }
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
-      <StatusBar style="light" />
-      <View style={styles.header}>
-        <View style={styles.headerBrand}>
+    <SafeAreaView style={appTheme.styles.safeArea} edges={['top', 'bottom']}>
+      <StatusBar style={appTheme.mode === 'dark' ? 'light' : 'dark'} />
+      <View style={appTheme.styles.header}>
+        <View style={appTheme.styles.headerBrand}>
           <Image
             source={require('../../assets/seekpro-mark.png')}
             contentFit="contain"
-            style={styles.headerLogo}
+            style={appTheme.styles.headerLogo}
           />
-          <Text style={styles.brandEyebrow}>SeekPro</Text>
-          <Text style={styles.headerTitle}>Today</Text>
+          <Text style={appTheme.styles.brandEyebrow}>SeekPro</Text>
         </View>
-        <View style={styles.headerActions}>
+        <View style={appTheme.styles.headerActions}>
           <Pressable
             accessibilityLabel="Notifications"
             accessibilityRole="button"
             onPress={() => showDemoMessage('Notifications')}
-            style={styles.notificationButton}
+            style={appTheme.styles.notificationButton}
           >
-            <Ionicons color="#bfc9c1" name="notifications-outline" size={22} />
-            <View style={styles.notificationDot} />
+            <Ionicons color={appTheme.colors.mutedBright} name="notifications-outline" size={22} />
+            <View style={appTheme.styles.notificationDot} />
           </Pressable>
           <Pressable
             accessibilityLabel="Profile"
             accessibilityRole="button"
             onPress={() => showDemoMessage('Profile')}
-            style={styles.profileButton}
+            style={appTheme.styles.profileButton}
           >
-            <Ionicons color="#003824" name="person-outline" size={19} />
+            <Ionicons color={appTheme.colors.mintDark} name="person-outline" size={19} />
           </Pressable>
         </View>
       </View>
 
       <ScrollView
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={appTheme.styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.greeting}>
-          <Text style={styles.dateLabel}>Tuesday, Oct 24</Text>
-          <Text style={styles.greetingTitle}>Good morning, Alex</Text>
+        <View style={appTheme.styles.greeting}>
+          <Text style={appTheme.styles.dateLabel}>Today · Tuesday, Oct 24</Text>
+          <Text style={appTheme.styles.greetingTitle}>Good morning, SRK</Text>
         </View>
 
-        <CardWidget style={styles.synthesisCard}>
-          <View style={styles.synthesisHeader}>
-            <View style={styles.synthesisTitleGroup}>
-              <View style={styles.synthesisIconWrap}>
-                <MaterialCommunityIcons color="#a0e8c2" name="auto-fix" size={17} />
+        <CardWidget style={appTheme.styles.synthesisCard}>
+          <View style={appTheme.styles.synthesisHeader}>
+            <View style={appTheme.styles.synthesisTitleGroup}>
+              <View style={appTheme.styles.synthesisIconWrap}>
+                <MaterialCommunityIcons color={appTheme.colors.mintBright} name="auto-fix" size={17} />
               </View>
-              <Text style={styles.synthesisTitle}>Executive Synthesis</Text>
+              <Text style={appTheme.styles.synthesisTitle}>Executive Synthesis</Text>
             </View>
-            <Text style={styles.timeBadge}>06:45 AM</Text>
+            <Text style={appTheme.styles.timeBadge}>06:45 AM</Text>
           </View>
-          <Text style={styles.synthesisBody}>
-            SeekPro orchestrated your schedule: <Text style={styles.bodyHighlight}>3 core focus blocks</Text>
+          <Text style={appTheme.styles.synthesisBody}>
+            SeekPro orchestrated your schedule: <Text style={appTheme.styles.bodyHighlight}>3 core focus blocks</Text>
             {' '}protected, 2 financial alerts triaged, and biometrics peaked at{' '}
-            <Text style={styles.bodyAccent}>92%</Text>. Your workspace is clear until{' '}
-            <Text style={styles.bodyStrong}>10:30 AM.</Text>
+            <Text style={appTheme.styles.bodyAccent}>92%</Text>. Your workspace is clear until{' '}
+            <Text style={appTheme.styles.bodyStrong}>10:30 AM.</Text>
           </Text>
-          <View style={styles.synthesisFooter}>
+          <View style={appTheme.styles.synthesisFooter}>
             <Pressable
               accessibilityRole="button"
               onPress={() => showDemoMessage('Audio brief')}
-              style={styles.audioButton}
+              style={appTheme.styles.audioButton}
             >
-              <View style={styles.playCircle}>
-                <Ionicons color="#003824" name="play" size={12} />
+              <View style={appTheme.styles.playCircle}>
+                <Ionicons color={appTheme.colors.mintDark} name="play" size={12} />
               </View>
-              <Text style={styles.audioButtonText}>Listen to 90s Audio Brief</Text>
-              <Feather color="#bfc9c1" name="headphones" size={14} />
+              <Text style={appTheme.styles.audioButtonText}>Listen to 90s Audio Brief</Text>
+              <Feather color={appTheme.colors.mutedBright} name="headphones" size={14} />
             </Pressable>
-            <Text style={styles.calmLabel}>Calm state active</Text>
+            <Text style={appTheme.styles.calmLabel}>Calm state active</Text>
           </View>
         </CardWidget>
 
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
+        <View style={appTheme.styles.section}>
+          <View style={appTheme.styles.sectionHeader}>
             <SectionHeading title="Priority Focus Queue" meta="3 remaining" />
             <Pressable
               accessibilityLabel="Rearrange queue"
               accessibilityRole="button"
               onPress={() => showDemoMessage('Focus queue')}
-              style={styles.tuneButton}
+              style={appTheme.styles.tuneButton}
             >
-              <MaterialCommunityIcons color="#bfc9c1" name="tune-variant" size={20} />
+              <MaterialCommunityIcons color={appTheme.colors.mutedBright} name="tune-variant" size={20} />
             </Pressable>
           </View>
-          <CardWidget style={styles.taskCard}>
-            <View style={styles.taskTop}>
-              <View style={styles.taskIcon}>
-                <MaterialCommunityIcons color="#50df9c" name="target" size={17} />
+          <CardWidget style={appTheme.styles.taskCard}>
+            <View style={appTheme.styles.taskTop}>
+              <View style={appTheme.styles.taskIcon}>
+                <MaterialCommunityIcons color={appTheme.colors.mint} name="target" size={17} />
               </View>
-              <View style={styles.taskContent}>
-                <View style={styles.taskMetaRow}>
-                  <Text style={styles.taskPriority}>Priority 1 · Deep Work</Text>
-                  <Text style={styles.taskTime}>10:30 AM – 12:00 PM</Text>
+              <View style={appTheme.styles.taskContent}>
+                <View style={appTheme.styles.taskMetaRow}>
+                  <Text style={appTheme.styles.taskPriority}>Priority 1 · Deep Work</Text>
+                  <Text style={appTheme.styles.taskTime}>10:30 AM – 12:00 PM</Text>
                 </View>
-                <Text style={styles.taskTitle}>Finalize Q4 Product Roadmap &amp; Board Deck</Text>
-                <View style={styles.taskBadges}>
-                  <View style={styles.taskBadge}>
-                    <MaterialCommunityIcons color="#a0e8c2" name="lock-clock" size={13} />
-                    <Text style={styles.taskBadgeText}>Focus Lock</Text>
+                <Text style={appTheme.styles.taskTitle}>Finalize Q4 Product Roadmap &amp; Board Deck</Text>
+                <View style={appTheme.styles.taskBadges}>
+                  <View style={appTheme.styles.taskBadge}>
+                    <MaterialCommunityIcons color={appTheme.colors.mintBright} name="lock-clock" size={13} />
+                    <Text style={appTheme.styles.taskBadgeText}>Focus Lock</Text>
                   </View>
-                  <View style={styles.taskBadge}>
-                    <MaterialCommunityIcons color="#a0e8c2" name="calendar-check" size={13} />
-                    <Text style={styles.taskBadgeText}>Calendar Synced</Text>
+                  <View style={appTheme.styles.taskBadge}>
+                    <MaterialCommunityIcons color={appTheme.colors.mintBright} name="calendar-check" size={13} />
+                    <Text style={appTheme.styles.taskBadgeText}>Calendar Synced</Text>
                   </View>
                 </View>
               </View>
             </View>
-            <View style={styles.taskFooter}>
-              <Text style={styles.initials}>F  K</Text>
+            <View style={appTheme.styles.taskFooter}>
+              <Text style={appTheme.styles.initials}>F  K</Text>
               <Pressable
                 accessibilityRole="button"
                 onPress={() => showDemoMessage('Focus session')}
-                style={styles.startFocusButton}
+                style={appTheme.styles.startFocusButton}
               >
-                <Ionicons color="#003824" name="play-circle-outline" size={17} />
-                <Text style={styles.startFocusText}>Start Focus Session</Text>
+                <Ionicons color={appTheme.colors.mintDark} name="play-circle-outline" size={17} />
+                <Text style={appTheme.styles.startFocusText}>Start Focus Session</Text>
               </Pressable>
             </View>
           </CardWidget>
 
-          <CardWidget style={styles.financeTaskCard}>
-            <View style={styles.financeTaskTop}>
-              <View style={styles.financeIcon}>
-                <MaterialCommunityIcons color="#ffdeaa" name="receipt-text-outline" size={17} />
+          <CardWidget style={appTheme.styles.financeTaskCard}>
+            <View style={appTheme.styles.financeTaskTop}>
+              <View style={appTheme.styles.financeIcon}>
+                <MaterialCommunityIcons color={appTheme.colors.amber} name="receipt-text-outline" size={17} />
               </View>
-              <View style={styles.financeContent}>
-                <View style={styles.taskMetaRow}>
-                  <Text style={styles.financeLabel}>Plaid Insight</Text>
-                  <Text style={styles.taskTime}>Due Tomorrow</Text>
+              <View style={appTheme.styles.financeContent}>
+                <View style={appTheme.styles.taskMetaRow}>
+                  <Text style={appTheme.styles.financeLabel}>Plaid Insight</Text>
+                  <Text style={appTheme.styles.taskTime}>Due Tomorrow</Text>
                 </View>
-                <Text style={styles.financeTitle}>Review $240 SaaS Renewal (Figma Enterprise)</Text>
-                <Text style={styles.financeDescription}>
+                <Text style={appTheme.styles.financeTitle}>Review $240 SaaS Renewal (Figma Enterprise)</Text>
+                <Text style={appTheme.styles.financeDescription}>
                   Seat utilization dropped 18% over the last 30 days.
                 </Text>
               </View>
             </View>
-            <View style={styles.financeActions}>
+            <View style={appTheme.styles.financeActions}>
               <Pressable
                 onPress={() => showDemoMessage('Snooze reminder')}
-                style={styles.smallAction}
+                style={appTheme.styles.smallAction}
               >
-                <Text style={styles.smallActionText}>Snooze 3d</Text>
+                <Text style={appTheme.styles.smallActionText}>Snooze 3d</Text>
               </Pressable>
               <Pressable
                 onPress={() => showDemoMessage('Approve expense')}
-                style={styles.approveAction}
+                style={appTheme.styles.approveAction}
               >
-                <Text style={styles.approveActionText}>Approve &amp; Log</Text>
+                <Text style={appTheme.styles.approveActionText}>Approve &amp; Log</Text>
               </Pressable>
             </View>
           </CardWidget>
 
           <Pressable
             onPress={() => showDemoMessage('Health routine')}
-            style={styles.walkCard}
+            style={appTheme.styles.walkCard}
           >
-            <View style={styles.walkIcon}>
-              <MaterialCommunityIcons color="#50df9c" name="walk" size={17} />
+            <View style={appTheme.styles.walkIcon}>
+              <MaterialCommunityIcons color={appTheme.colors.mint} name="walk" size={17} />
             </View>
-            <View style={styles.walkContent}>
-              <View style={styles.walkMeta}>
-                <Text style={styles.walkProvider}>Apple Health Target</Text>
-                <Text style={styles.walkTime}>·  3:30 PM</Text>
+            <View style={appTheme.styles.walkContent}>
+              <View style={appTheme.styles.walkMeta}>
+                <Text style={appTheme.styles.walkProvider}>Apple Health Target</Text>
+                <Text style={appTheme.styles.walkTime}>·  3:30 PM</Text>
               </View>
-              <Text style={styles.walkTitle}>Afternoon 30-min Recovery Walk</Text>
+              <Text style={appTheme.styles.walkTitle}>Afternoon 30-min Recovery Walk</Text>
             </View>
-            <View style={styles.walkChevron}>
-              <Ionicons color="#bfc9c1" name="chevron-forward" size={17} />
+            <View style={appTheme.styles.walkChevron}>
+              <Ionicons color={appTheme.colors.mutedBright} name="chevron-forward" size={17} />
             </View>
           </Pressable>
         </View>
 
-        <View style={styles.section}>
+        <View style={appTheme.styles.section}>
           <SectionHeading title="Ecosystem Status" meta="Synced 2m ago" />
-          <View style={styles.metricsGrid}>
+          <View style={appTheme.styles.metricsGrid}>
             <MetricCardWidget
               title="Focus Gauge"
               icon="timer-sand"
@@ -247,7 +251,7 @@ export default function DashboardScreen() {
               unit="hrs"
               detail="Target: 6.0 hrs"
               progress={75}
-              style={styles.metricCard}
+              style={appTheme.styles.metricCard}
             />
             <MetricCardWidget
               title="Cash Flow"
@@ -256,7 +260,7 @@ export default function DashboardScreen() {
               detail="+$1,250 net week"
               accent
               sparkline={[10, 12, 18, 15, 24, 30, 26, 38, 47]}
-              style={styles.metricCard}
+              style={appTheme.styles.metricCard}
             />
             <MetricCardWidget
               title="Recovery"
@@ -265,7 +269,7 @@ export default function DashboardScreen() {
               unit="Prime"
               detail="8h 12m sleep · 58 bpm"
               footerLabel="Readiness peak"
-              style={styles.metricCard}
+              style={appTheme.styles.metricCard}
             />
             <MetricCardWidget
               title="Autonomous"
@@ -275,57 +279,57 @@ export default function DashboardScreen() {
               accent
               footerLabel="All nodes active"
               footerAccent
-              style={styles.metricCard}
+              style={appTheme.styles.metricCard}
             />
           </View>
         </View>
 
-        <View style={styles.assistantSection}>
-          <View style={styles.promptCard}>
-            <View style={styles.assistantMark}>
-              <MaterialCommunityIcons color="#a0e8c2" name="auto-fix" size={18} />
+        <View style={appTheme.styles.assistantSection}>
+          <View style={appTheme.styles.promptCard}>
+            <View style={appTheme.styles.assistantMark}>
+              <MaterialCommunityIcons color={appTheme.colors.mintBright} name="auto-fix" size={18} />
             </View>
             <TextInput
               accessibilityLabel="Ask SeekPro"
               onChangeText={setPrompt}
               onSubmitEditing={() => showDemoMessage('SeekPro assistant')}
               placeholder="Ask SeekPro to reschedule, draft, or analyze..."
-              placeholderTextColor="rgba(191, 201, 193, 0.6)"
+              placeholderTextColor={appTheme.overlays.neutral60}
               returnKeyType="send"
-              style={styles.promptInput}
+              style={appTheme.styles.promptInput}
               value={prompt}
             />
             <Pressable
               accessibilityLabel="Voice input"
               onPress={() => showDemoMessage('Voice input')}
-              style={styles.promptIconButton}
+              style={appTheme.styles.promptIconButton}
             >
-              <Ionicons color="#bfc9c1" name="mic-outline" size={17} />
+              <Ionicons color={appTheme.colors.mutedBright} name="mic-outline" size={17} />
             </Pressable>
             <Pressable
               accessibilityLabel="Send directive"
               onPress={() => showDemoMessage('SeekPro assistant')}
-              style={styles.sendButton}
+              style={appTheme.styles.sendButton}
             >
-              <Ionicons color="#003824" name="arrow-up" size={18} />
+              <Ionicons color={appTheme.colors.mintDark} name="arrow-up" size={18} />
             </Pressable>
           </View>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.suggestions}
+            contentContainerStyle={appTheme.styles.suggestions}
           >
-            <Pressable onPress={() => setPrompt('Reschedule 2 PM meeting')} style={styles.suggestion}>
-              <MaterialCommunityIcons color="#50df9c" name="clock-outline" size={15} />
-              <Text style={styles.suggestionText}>Reschedule 2 PM meeting</Text>
+            <Pressable onPress={() => setPrompt('Reschedule 2 PM meeting')} style={appTheme.styles.suggestion}>
+              <MaterialCommunityIcons color={appTheme.colors.mint} name="clock-outline" size={15} />
+              <Text style={appTheme.styles.suggestionText}>Reschedule 2 PM meeting</Text>
             </Pressable>
-            <Pressable onPress={() => setPrompt('Summarize unread pings')} style={styles.suggestion}>
-              <MaterialCommunityIcons color="#50df9c" name="message-check-outline" size={15} />
-              <Text style={styles.suggestionText}>Summarize unread pings</Text>
+            <Pressable onPress={() => setPrompt('Summarize unread pings')} style={appTheme.styles.suggestion}>
+              <MaterialCommunityIcons color={appTheme.colors.mint} name="message-check-outline" size={15} />
+              <Text style={appTheme.styles.suggestionText}>Summarize unread pings</Text>
             </Pressable>
-            <Pressable onPress={() => setPrompt('Log espresso')} style={styles.suggestion}>
-              <MaterialCommunityIcons color="#50df9c" name="coffee-outline" size={15} />
-              <Text style={styles.suggestionText}>Log espresso</Text>
+            <Pressable onPress={() => setPrompt('Log espresso')} style={appTheme.styles.suggestion}>
+              <MaterialCommunityIcons color={appTheme.colors.mint} name="coffee-outline" size={15} />
+              <Text style={appTheme.styles.suggestionText}>Log espresso</Text>
             </Pressable>
           </ScrollView>
         </View>
@@ -334,6 +338,14 @@ export default function DashboardScreen() {
       <MainBottomNavigation
         activeTab="today"
         onTabPress={(tab) => {
+          if (tab === 'settings') {
+            router.push('/profile' as Href);
+            return;
+          }
+          if (tab === 'assistant') {
+            router.push('/assistant-hub' as Href);
+            return;
+          }
           const featureNames = {
             focus: 'Focus',
             assistant: 'SeekPro assistant',

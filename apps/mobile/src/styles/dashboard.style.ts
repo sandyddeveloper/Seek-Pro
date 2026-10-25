@@ -1,61 +1,38 @@
+import { type ThemeColors, type ThemeFonts, type ThemeOverlays } from './theme.style';
 import { StyleSheet } from 'react-native';
 
-const colors = {
-  background: '#0c0f0e',
-  surface: '#111413',
-  surfaceLow: '#191c1b',
-  surfaceHigh: '#282b29',
-  surfaceHighest: '#323534',
-  mint: '#50df9c',
-  mintBright: '#a0e8c2',
-  mintOn: '#003824',
-  text: '#e1e3e1',
-  muted: '#89938c',
-  mutedBright: '#bfc9c1',
-  outline: '#3f4943',
-  amber: '#ffdeaa',
-};
-
-export const styles = StyleSheet.create({
+export const createStyles = (colors: ThemeColors, overlays: ThemeOverlays, fontFamilies: ThemeFonts) => StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: colors.surface,
+    backgroundColor: colors.surfaceBase,
   },
   header: {
-    minHeight: 62,
-    paddingHorizontal: 20,
+    minHeight: 72,
+    paddingHorizontal: 18,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: 'rgba(160, 232, 194, 0.08)',
+    borderBottomColor: overlays.mintBright08,
     backgroundColor: colors.surface,
   },
   headerBrand: {
     flexDirection: 'row',
     alignItems: 'center',
-    flexWrap: 'wrap',
-    columnGap: 8,
-    width: 210,
+    flexShrink: 0,
+    flexWrap: 'nowrap',
+    columnGap: 10,
+    width: 'auto',
   },
   headerLogo: {
-    width: 24,
-    height: 24,
+    width: 40,
+    height: 40,
   },
   brandEyebrow: {
-    color: colors.mint,
-    fontFamily: 'HankenGroteskSemiBold',
-    fontSize: 10,
-    letterSpacing: 0.9,
-    textTransform: 'uppercase',
-  },
-  headerTitle: {
-    flexBasis: '100%',
-    marginTop: -2,
     color: colors.text,
-    fontFamily: 'ManropeSemiBold',
-    fontSize: 21,
-    letterSpacing: -0.4,
+    fontFamily: fontFamilies.manropeSemiBold,
+    fontSize: 20,
+    letterSpacing: -0.45,
   },
   headerActions: {
     flexDirection: 'row',
@@ -98,14 +75,14 @@ export const styles = StyleSheet.create({
   },
   dateLabel: {
     color: colors.mutedBright,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 12,
     letterSpacing: 1,
     textTransform: 'uppercase',
   },
   greetingTitle: {
     color: colors.text,
-    fontFamily: 'ManropeSemiBold',
+    fontFamily: fontFamilies.manropeSemiBold,
     fontSize: 27,
     letterSpacing: -1,
   },
@@ -113,7 +90,7 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
     padding: 22,
     gap: 16,
-    borderRadius: 28,
+    borderRadius: 24,
   },
   synthesisHeader: {
     flexDirection: 'row',
@@ -132,11 +109,11 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 14,
-    backgroundColor: 'rgba(160, 232, 194, 0.14)',
+    backgroundColor: overlays.mintBright14,
   },
   synthesisTitle: {
     color: colors.mintBright,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 12,
     letterSpacing: 0.8,
     textTransform: 'uppercase',
@@ -147,27 +124,27 @@ export const styles = StyleSheet.create({
     borderRadius: 12,
     overflow: 'hidden',
     color: colors.mutedBright,
-    backgroundColor: colors.surfaceHighest,
-    fontFamily: 'HankenGroteskSemiBold',
+    backgroundColor: colors.surfaceHigher,
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 10,
   },
   synthesisBody: {
     color: colors.text,
-    fontFamily: 'HankenGrotesk',
+    fontFamily: fontFamilies.hankenGrotesk,
     fontSize: 16,
     lineHeight: 25,
   },
   bodyHighlight: {
     color: colors.mintBright,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
   },
   bodyAccent: {
     color: colors.mint,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
   },
   bodyStrong: {
     color: colors.text,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
   },
   synthesisFooter: {
     flexDirection: 'row',
@@ -195,12 +172,12 @@ export const styles = StyleSheet.create({
   },
   audioButtonText: {
     color: colors.text,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 11,
   },
   calmLabel: {
     color: colors.mutedBright,
-    fontFamily: 'HankenGrotesk',
+    fontFamily: fontFamilies.hankenGrotesk,
     fontSize: 11,
   },
   section: {
@@ -221,14 +198,14 @@ export const styles = StyleSheet.create({
   },
   sectionTitle: {
     color: colors.text,
-    fontFamily: 'ManropeSemiBold',
+    fontFamily: fontFamilies.manropeSemiBold,
     fontSize: 18,
     letterSpacing: -0.4,
   },
   sectionMeta: {
     marginLeft: 'auto',
     color: colors.mutedBright,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 10,
     lineHeight: 14,
   },
@@ -253,8 +230,8 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-    backgroundColor: 'rgba(160, 232, 194, 0.13)',
-    borderColor: 'rgba(80, 223, 156, 0.22)',
+    backgroundColor: overlays.mintBright13,
+    borderColor: overlays.mint22,
     borderWidth: 1,
   },
   taskContent: {
@@ -270,7 +247,7 @@ export const styles = StyleSheet.create({
   taskPriority: {
     flexShrink: 1,
     color: colors.mint,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 10,
     letterSpacing: 0.5,
     textTransform: 'uppercase',
@@ -278,12 +255,12 @@ export const styles = StyleSheet.create({
   taskTime: {
     flexShrink: 0,
     color: colors.mutedBright,
-    fontFamily: 'HankenGroteskSemiBold',
-    fontSize: 9,
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
+    fontSize: 10,
   },
   taskTitle: {
     color: colors.text,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 17,
     lineHeight: 23,
   },
@@ -299,7 +276,7 @@ export const styles = StyleSheet.create({
   },
   taskBadgeText: {
     color: colors.mutedBright,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 10,
   },
   taskFooter: {
@@ -314,7 +291,7 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: colors.surfaceHigh,
     color: colors.mutedBright,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 10,
     letterSpacing: 1,
   },
@@ -329,7 +306,7 @@ export const styles = StyleSheet.create({
   },
   startFocusText: {
     color: colors.mintOn,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 11,
   },
   financeTaskCard: {
@@ -346,7 +323,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 9,
-    backgroundColor: 'rgba(255, 222, 170, 0.15)',
+    backgroundColor: overlays.amber15,
   },
   financeContent: {
     flex: 1,
@@ -354,20 +331,20 @@ export const styles = StyleSheet.create({
   },
   financeLabel: {
     color: colors.amber,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 10,
     letterSpacing: 0.5,
     textTransform: 'uppercase',
   },
   financeTitle: {
     color: colors.text,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 15,
     lineHeight: 20,
   },
   financeDescription: {
     color: colors.mutedBright,
-    fontFamily: 'HankenGrotesk',
+    fontFamily: fontFamilies.hankenGrotesk,
     fontSize: 13,
     lineHeight: 19,
   },
@@ -384,18 +361,18 @@ export const styles = StyleSheet.create({
   },
   smallActionText: {
     color: colors.mutedBright,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 10,
   },
   approveAction: {
     paddingHorizontal: 13,
     paddingVertical: 8,
     borderRadius: 18,
-    backgroundColor: colors.surfaceHighest,
+    backgroundColor: colors.surfaceHigher,
   },
   approveActionText: {
     color: colors.mint,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 10,
   },
   walkCard: {
@@ -406,7 +383,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 12,
     borderRadius: 24,
-    backgroundColor: colors.surfaceLow,
+    backgroundColor: colors.surface,
   },
   walkIcon: {
     width: 25,
@@ -414,7 +391,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 13,
-    backgroundColor: colors.surfaceHighest,
+    backgroundColor: colors.surfaceHigher,
   },
   walkContent: {
     flex: 1,
@@ -427,17 +404,17 @@ export const styles = StyleSheet.create({
   },
   walkProvider: {
     color: colors.mint,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 10,
   },
   walkTime: {
     color: colors.mutedBright,
-    fontFamily: 'HankenGrotesk',
+    fontFamily: fontFamilies.hankenGrotesk,
     fontSize: 10,
   },
   walkTitle: {
     color: colors.text,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 14,
   },
   walkChevron: {
@@ -470,7 +447,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 11,
     paddingVertical: 8,
     borderRadius: 25,
-    backgroundColor: colors.surfaceLow,
+    backgroundColor: colors.surface,
   },
   assistantMark: {
     width: 34,
@@ -478,14 +455,14 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 18,
-    backgroundColor: 'rgba(160, 232, 194, 0.14)',
+    backgroundColor: overlays.mintBright14,
   },
   promptInput: {
     flex: 1,
     minWidth: 0,
     paddingVertical: 6,
     color: colors.text,
-    fontFamily: 'HankenGrotesk',
+    fontFamily: fontFamilies.hankenGrotesk,
     fontSize: 12,
   },
   promptIconButton: {
@@ -515,11 +492,11 @@ export const styles = StyleSheet.create({
     gap: 6,
     paddingHorizontal: 11,
     borderRadius: 18,
-    backgroundColor: colors.surfaceLow,
+    backgroundColor: colors.surface,
   },
   suggestionText: {
     color: colors.mutedBright,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 10,
   },
 });

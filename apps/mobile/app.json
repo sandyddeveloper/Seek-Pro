@@ -3,6 +3,7 @@
     "name": "Seek-Pro",
     "slug": "seek-pro",
     "version": "0.1.0",
+    "icon": "./assets/seekpro-mark.png",
     "orientation": "portrait",
     "scheme": "seekpro",
     "userInterfaceStyle": "automatic",
@@ -14,7 +15,15 @@
         {
           "faceIDPermission": "Allow SeekPro to use Face ID to sign you in."
         }
-      ]
+      ],
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Allow SeekPro to use your microphone during voice sessions.",
+          "enableBackgroundRecording": false
+        }
+      ],
+      "expo-sqlite"
     ],
     "experiments": {
       "typedRoutes": true,

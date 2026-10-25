@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from 'react';
+import { useThemedStyles } from '../../lib/theme-context';
 import { View, type StyleProp, type ViewStyle } from 'react-native';
-import { styles } from '../../styles/card.style';
+import { createStyles } from '../../styles/card.style';
 
 type CardWidgetProps = PropsWithChildren<{
   accessibilityLabel?: string;
@@ -12,10 +13,11 @@ export default function CardWidget({
   children,
   style,
 }: CardWidgetProps) {
+  const appTheme = useThemedStyles(createStyles);
   return (
     <View
       accessibilityLabel={accessibilityLabel}
-      style={[styles.card, style]}
+      style={[appTheme.styles.card, style]}
     >
       {children}
     </View>

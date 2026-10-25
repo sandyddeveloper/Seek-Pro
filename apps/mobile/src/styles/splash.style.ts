@@ -1,20 +1,10 @@
+import { type ThemeColors, type ThemeFonts, type ThemeOverlays } from './theme.style';
 import { StyleSheet } from 'react-native';
 
-export const colors = {
-  surface: '#111413',
-  surfaceHighlight: '#282b29',
-  mint: '#50df9c',
-  mintDeep: '#05b476',
-  text: '#e1e3e1',
-  muted: '#89938c',
-  mutedBright: '#bfc9c1',
-  outline: '#3f4943',
-};
-
-export const styles = StyleSheet.create({
+export const createStyles = (colors: ThemeColors, overlays: ThemeOverlays, fontFamilies: ThemeFonts) => StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: colors.surface,
+    backgroundColor: colors.surfaceBase,
   },
   screen: {
     flex: 1,
@@ -57,7 +47,7 @@ export const styles = StyleSheet.create({
     left: '50%',
     top: '50%',
     borderWidth: 1,
-    borderColor: 'rgba(80, 223, 156, 0.12)',
+    borderColor: overlays.mint12,
     borderRadius: 999,
     shadowColor: colors.mint,
     shadowOpacity: 0.12,
@@ -73,7 +63,7 @@ export const styles = StyleSheet.create({
     top: '50%',
     borderWidth: 1,
     borderStyle: 'dashed',
-    borderColor: 'rgba(137, 147, 140, 0.4)',
+    borderColor: overlays.neutral40,
     borderRadius: 999,
     transform: [{ translateX: -72 }, { translateY: -72 }],
   },
@@ -98,8 +88,8 @@ export const styles = StyleSheet.create({
     height: 80,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: 'rgba(80, 223, 156, 0.34)',
-    backgroundColor: '#030a06',
+    borderColor: overlays.mint34,
+    backgroundColor: colors.deepBlack,
     shadowColor: colors.mint,
     shadowOpacity: 0.58,
     shadowRadius: 16,
@@ -116,13 +106,13 @@ export const styles = StyleSheet.create({
   },
   brandName: {
     color: colors.text,
-    fontFamily: 'Manrope',
+    fontFamily: fontFamilies.manrope,
     fontSize: 30,
     letterSpacing: -1.1,
   },
   brandAccent: {
     color: colors.mint,
-    fontFamily: 'Manrope',
+    fontFamily: fontFamilies.manrope,
     fontSize: 30,
     letterSpacing: -1.1,
   },
@@ -139,7 +129,7 @@ export const styles = StyleSheet.create({
   },
   tagline: {
     color: colors.muted,
-    fontFamily: 'HankenGrotesk',
+    fontFamily: fontFamilies.hankenGrotesk,
     fontSize: 11,
     letterSpacing: 2.2,
     textAlign: 'center',
@@ -166,7 +156,7 @@ export const styles = StyleSheet.create({
   },
   statusText: {
     color: colors.mutedBright,
-    fontFamily: 'HankenGrotesk',
+    fontFamily: fontFamilies.hankenGrotesk,
     fontSize: 11,
     letterSpacing: 1.6,
     textTransform: 'uppercase',
@@ -177,9 +167,9 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
     marginBottom: 22,
     borderWidth: 1,
-    borderColor: 'rgba(63, 73, 67, 0.65)',
+    borderColor: overlays.outline65,
     borderRadius: 4,
-    backgroundColor: colors.surfaceHighlight,
+    backgroundColor: colors.surfaceHigh,
   },
   progressFill: {
     width: '100%',
@@ -198,19 +188,19 @@ export const styles = StyleSheet.create({
   },
   versionText: {
     color: colors.muted,
-    fontFamily: 'HankenGroteskSemiBold',
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
     fontSize: 10,
     letterSpacing: 1.25,
     textTransform: 'uppercase',
   },
   separator: {
     color: colors.outline,
-    fontSize: 9,
+    fontSize: 10,
   },
   securityCaption: {
     color: colors.outline,
-    fontFamily: 'HankenGrotesk',
-    fontSize: 9,
+    fontFamily: fontFamilies.hankenGrotesk,
+    fontSize: 10,
     letterSpacing: 1,
     textTransform: 'uppercase',
   },

@@ -2,7 +2,7 @@ import {
   HankenGrotesk_500Medium,
   HankenGrotesk_600SemiBold,
 } from '@expo-google-fonts/hanken-grotesk';
-import { Manrope_700Bold } from '@expo-google-fonts/manrope';
+import { Manrope_500Medium, Manrope_700Bold } from '@expo-google-fonts/manrope';
 import { useFonts } from 'expo-font';
 import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
@@ -10,12 +10,15 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { styles } from '../styles/splash.style';
+import { createStyles } from '../styles/splash.style';
+import { useThemedStyles } from '../lib/theme-context';
 
 export default function SplashScreen() {
+  const appTheme = useThemedStyles(createStyles);
   const router = useRouter();
   const [fontsLoaded, fontError] = useFonts({
     Manrope: Manrope_700Bold,
+    ManropeMedium: Manrope_500Medium,
     HankenGrotesk: HankenGrotesk_500Medium,
     HankenGroteskSemiBold: HankenGrotesk_600SemiBold,
   });
@@ -39,49 +42,49 @@ export default function SplashScreen() {
   }, [fontError, fontsLoaded, router]);
 
   if (!fontsLoaded && !fontError) {
-    return <View style={styles.safeArea} />;
+    return <View style={appTheme.styles.safeArea} />;
   }
 
   return (
-    <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
+    <SafeAreaView style={appTheme.styles.safeArea} edges={['top', 'bottom']}>
       <StatusBar hidden />
-      <View style={styles.screen}>
-        <View pointerEvents="none" style={styles.ambientGlow}>
+      <View style={appTheme.styles.screen}>
+        <View pointerEvents="none" style={appTheme.styles.ambientGlow}>
           <Image
             source={require('../../assets/ambient-glow.png')}
             contentFit="contain"
-            style={styles.glowImage}
+            style={appTheme.styles.glowImage}
           />
         </View>
 
-        <View style={styles.topBreathingRoom} />
+        <View style={appTheme.styles.topBreathingRoom} />
 
-        <View style={styles.brandGroup}>
-          <View accessible accessibilityLabel="SeekPro logo" style={styles.logoOrbit}>
-            <View style={styles.outerOrbit} />
-            <View style={styles.orbitDot} />
-            <View style={styles.innerOrbit} />
-            <View style={styles.logoTile}>
+        <View style={appTheme.styles.brandGroup}>
+          <View accessible accessibilityLabel="SeekPro logo" style={appTheme.styles.logoOrbit}>
+            <View style={appTheme.styles.outerOrbit} />
+            <View style={appTheme.styles.orbitDot} />
+            <View style={appTheme.styles.innerOrbit} />
+            <View style={appTheme.styles.logoTile}>
               <Image
                 source={require('../../assets/seekpro-mark.png')}
                 contentFit="contain"
-                style={styles.logoImage}
+                style={appTheme.styles.logoImage}
               />
             </View>
           </View>
 
-          <View style={styles.wordmark}>
-            <Text style={styles.brandName}>Seek</Text>
-            <Text style={styles.brandAccent}>Pro</Text>
-            <View style={styles.wordmarkDot} />
+          <View style={appTheme.styles.wordmark}>
+            <Text style={appTheme.styles.brandName}>Seek</Text>
+            <Text style={appTheme.styles.brandAccent}>Pro</Text>
+            <View style={appTheme.styles.wordmarkDot} />
           </View>
-          <Text style={styles.tagline}>Intelligent Executive Operating System</Text>
+          <Text style={appTheme.styles.tagline}>Intelligent Executive Operating System</Text>
         </View>
 
-        <View style={styles.statusGroup}>
-          <View style={styles.statusLabel}>
-            <View style={styles.statusDot} />
-            <Text style={styles.statusText}>Neural Enclave Initialized</Text>
+        <View style={appTheme.styles.statusGroup}>
+          <View style={appTheme.styles.statusLabel}>
+            <View style={appTheme.styles.statusDot} />
+            <Text style={appTheme.styles.statusText}>Neural Enclave Initialized</Text>
           </View>
 
           <View
@@ -89,17 +92,17 @@ export default function SplashScreen() {
             accessibilityLabel="Initialization complete"
             accessibilityRole="progressbar"
             accessibilityValue={{ min: 0, max: 100, now: 100 }}
-            style={styles.progressTrack}
+            style={appTheme.styles.progressTrack}
           >
-            <View style={styles.progressFill} />
+            <View style={appTheme.styles.progressFill} />
           </View>
 
-          <View style={styles.versionRow}>
-            <Text style={styles.versionText}>SeekPro OS v2.4</Text>
-            <Text style={styles.separator}>·</Text>
-            <Text style={styles.versionText}>Hardware Enclave</Text>
+          <View style={appTheme.styles.versionRow}>
+            <Text style={appTheme.styles.versionText}>SeekPro OS v2.4</Text>
+            <Text style={appTheme.styles.separator}>·</Text>
+            <Text style={appTheme.styles.versionText}>Hardware Enclave</Text>
           </View>
-          <Text style={styles.securityCaption}>
+          <Text style={appTheme.styles.securityCaption}>
             Zero-Trace Architecture · Sovereign Layer
           </Text>
         </View>
