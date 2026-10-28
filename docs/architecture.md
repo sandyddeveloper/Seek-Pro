@@ -28,13 +28,12 @@ The structure favors clear ownership and feature-level organization without star
 │   │   ├── src/
 │   │   │   ├── app/                 # Expo Router routes and layouts
 │   │   │   ├── screens/             # Mobile screen components rendered by routes
-│   │   │   ├── styles/              # Screen and app-level StyleSheet definitions
+│   │   │   ├── styles/              # Screen styles and shared theme.style.ts tokens
 │   │   │   ├── components/          # Mobile-only reusable UI
 │   │   │   ├── constants/           # App-wide constant values and shared literal types
 │   │   │   ├── widgets/              # Reusable, composed dashboard and feature cards
 │   │   │   ├── features/             # Mobile feature implementation
 │   │   │   ├── lib/                 # App-level clients and utilities
-│   │   │   └── theme/               # Mobile design tokens and theme
 │   │   └── assets/                  # App-owned fonts, images, and other bundled assets
 │   └── web/
 │       ├── public/                  # Static files served as-is
@@ -87,6 +86,10 @@ Keep backend tests in `tests/`; separate unit and integration tests as both type
 ### Expo mobile: routes are not feature logic
 
 `src/app/` is the Expo Router route tree. Keep route files focused on navigation and composing screen components from `src/screens/`; keep their `StyleSheet` definitions in `src/styles/`. Put reusable app UI such as the main bottom navigation in `src/components/`, app-wide constant values and shared literal types in `src/constants/`, composed cards and domain-oriented dashboard elements in `src/widgets/`, and app-level clients/utilities in `src/lib/`. Keep reusable components configurable through props and widgets data-driven, so screens can compose and reuse them without embedding feature-specific data. Add route groups such as `(auth)` or `(tabs)` only when the navigation design needs them. As feature-specific screens grow, group them by feature rather than accumulating unrelated screens in a single folder.
+
+Use `src/styles/theme.style.ts` as the single source of truth for mobile color, overlay, and font-family tokens. It provides the Executive Dark Mint palette and the Stitch Executive Mint light palette. Build screen styles with a `createStyles(colors, overlays, fontFamilies)` factory and access the selected palette in screens and reusable components through `useThemedStyles`; do not capture the default palette in a module-level `StyleSheet`.
+
+The app-wide `ThemeProvider` in `src/lib/theme-context.tsx` resolves the user's System, Light, or Dark preference and persists the selection with AsyncStorage. Keep appearance controls in Profile & Settings and add new semantic color tokens to both palettes when a feature needs them.
 
 Keep React Native components and platform-specific UI in the mobile app. Do not share UI components with Next.js merely to reduce duplication; the platforms have different rendering and interaction models.
 

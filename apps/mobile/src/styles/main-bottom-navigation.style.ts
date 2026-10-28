@@ -1,6 +1,7 @@
+import { type ThemeColors, type ThemeFonts, type ThemeOverlays } from './theme.style';
 import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+export const createStyles = (colors: ThemeColors, overlays: ThemeOverlays, fontFamilies: ThemeFonts) => StyleSheet.create({
   container: {
     minHeight: 64,
     flexDirection: 'row',
@@ -9,8 +10,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingTop: 5,
     borderTopWidth: 1,
-    borderTopColor: 'rgba(160, 232, 194, 0.15)',
-    backgroundColor: '#111413',
+    borderTopColor: overlays.mintBright15,
+    backgroundColor: colors.background,
   },
   item: {
     minHeight: 52,
@@ -20,14 +21,14 @@ export const styles = StyleSheet.create({
     gap: 3,
   },
   label: {
-    color: '#89938c',
-    fontFamily: 'HankenGroteskMedium',
-    fontSize: 9,
+    color: colors.muted,
+    fontFamily: fontFamilies.hankenGroteskMedium,
+    fontSize: 11,
   },
   activeLabel: {
-    color: '#a0e8c2',
-    fontFamily: 'HankenGroteskSemiBold',
-    fontSize: 9,
+    color: colors.mintBright,
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
+    fontSize: 11,
   },
   assistantIcon: {
     width: 36,
@@ -36,12 +37,16 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 18,
     borderWidth: 1,
-    borderColor: 'rgba(80, 223, 156, 0.35)',
-    backgroundColor: 'rgba(160, 232, 194, 0.1)',
+    borderColor: overlays.mint35,
+    backgroundColor: overlays.mintBright10,
+  },
+  assistantLogo: {
+    width: 29,
+    height: 29,
   },
   assistantLabel: {
-    color: '#50df9c',
-    fontFamily: 'HankenGroteskSemiBold',
-    fontSize: 9,
+    color: colors.mint,
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
+    fontSize: 11,
   },
 });

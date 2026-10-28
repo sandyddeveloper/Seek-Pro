@@ -1,7 +1,9 @@
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { useThemedStyles } from '../lib/theme-context';
+import { Image } from 'expo-image';
 import { Pressable, Text, View } from 'react-native';
 import type { MainNavigationTab } from '../constants/main-navigation.constants';
-import { styles } from '../styles/main-bottom-navigation.style';
+import { createStyles } from '../styles/main-bottom-navigation.style';
 
 type MainBottomNavigationProps = {
   activeTab: MainNavigationTab;
@@ -9,6 +11,7 @@ type MainBottomNavigationProps = {
 };
 
 function TabIcon({ tab, color }: { tab: MainNavigationTab; color: string }) {
+  const appTheme = useThemedStyles(createStyles);
   switch (tab) {
     case 'today':
       return <MaterialCommunityIcons color={color} name="view-dashboard" size={22} />;
@@ -16,8 +19,12 @@ function TabIcon({ tab, color }: { tab: MainNavigationTab; color: string }) {
       return <MaterialCommunityIcons color={color} name="timer-outline" size={22} />;
     case 'assistant':
       return (
-        <View style={styles.assistantIcon}>
-          <MaterialCommunityIcons color="#50df9c" name="auto-fix" size={20} />
+        <View style={appTheme.styles.assistantIcon}>
+          <Image
+            source={require('../../assets/seekpro-mark.png')}
+            contentFit="contain"
+            style={appTheme.styles.assistantLogo}
+          />
         </View>
       );
     case 'insights':
@@ -45,11 +52,12 @@ export default function MainBottomNavigation({
   activeTab,
   onTabPress,
 }: MainBottomNavigationProps) {
+  const appTheme = useThemedStyles(createStyles);
   return (
-    <View style={styles.container}>
+    <View style={appTheme.styles.container}>
       {tabs.map(({ key, label, accessibilityLabel }) => {
         const isActive = activeTab === key;
-        const iconColor = isActive ? '#a0e8c2' : '#89938c';
+        const iconColor = isActive ? appTheme.colors.mintBright : appTheme.colors.muted;
 
         return (
           <Pressable
@@ -62,14 +70,14 @@ export default function MainBottomNavigation({
                 onTabPress(key);
               }
             }}
-            style={styles.item}
+            style={appTheme.styles.item}
           >
             <TabIcon tab={key} color={iconColor} />
             <Text
               style={[
-                styles.label,
-                isActive && styles.activeLabel,
-                key === 'assistant' && styles.assistantLabel,
+                appTheme.styles.label,
+                isActive && appTheme.styles.activeLabel,
+                key === 'assistant' && appTheme.styles.assistantLabel,
               ]}
             >
               {label}

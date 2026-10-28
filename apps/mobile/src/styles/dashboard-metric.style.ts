@@ -1,6 +1,7 @@
+import { type ThemeColors, type ThemeFonts, type ThemeOverlays } from './theme.style';
 import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+export const createStyles = (colors: ThemeColors, overlays: ThemeOverlays, fontFamilies: ThemeFonts) => StyleSheet.create({
   card: {
     minHeight: 148,
     justifyContent: 'space-between',
@@ -13,9 +14,9 @@ export const styles = StyleSheet.create({
     gap: 6,
   },
   title: {
-    color: '#bfc9c1',
-    fontFamily: 'HankenGroteskSemiBold',
-    fontSize: 10,
+    color: colors.mutedBright,
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
+    fontSize: 11,
     letterSpacing: 0.6,
     textTransform: 'uppercase',
   },
@@ -25,35 +26,35 @@ export const styles = StyleSheet.create({
     gap: 5,
   },
   value: {
-    color: '#e1e3e1',
-    fontFamily: 'ManropeSemiBold',
+    color: colors.text,
+    fontFamily: fontFamilies.manropeSemiBold,
     fontSize: 25,
     letterSpacing: -0.5,
   },
   unit: {
-    color: '#bfc9c1',
-    fontFamily: 'HankenGrotesk',
+    color: colors.mutedBright,
+    fontFamily: fontFamilies.hankenGrotesk,
     fontSize: 12,
   },
   detail: {
-    color: '#bfc9c1',
-    fontFamily: 'HankenGrotesk',
-    fontSize: 11,
+    color: colors.mutedBright,
+    fontFamily: fontFamilies.hankenGrotesk,
+    fontSize: 12,
   },
   accentDetail: {
-    color: '#50df9c',
-    fontFamily: 'HankenGroteskSemiBold',
+    color: colors.mint,
+    fontFamily: fontFamilies.hankenGroteskSemiBold,
   },
   progressTrack: {
     height: 6,
     overflow: 'hidden',
     borderRadius: 4,
-    backgroundColor: '#323534',
+    backgroundColor: colors.surfaceHigher,
   },
   progressFill: {
     height: '100%',
     borderRadius: 4,
-    backgroundColor: '#a0e8c2',
+    backgroundColor: colors.mintBright,
   },
   sparkline: {
     height: 28,
@@ -65,7 +66,7 @@ export const styles = StyleSheet.create({
   sparkBar: {
     width: 5,
     borderRadius: 3,
-    backgroundColor: 'rgba(80, 223, 156, 0.7)',
+    backgroundColor: overlays.mint70,
   },
   footer: {
     flexDirection: 'row',
@@ -76,6 +77,6 @@ export const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: '#a0e8c2',
+    backgroundColor: colors.mintBright,
   },
 });
